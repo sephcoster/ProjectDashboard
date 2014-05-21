@@ -1,4 +1,13 @@
-# reveal.js [![Build Status](https://travis-ci.org/hakimel/reveal.js.png?branch=master)](https://travis-ci.org/hakimel/reveal.js)
+#Project Dashboard - An agile project dashboard using RevealJS, NVD3.js, and Web Service Connections.
+
+As you can see from the repository, this is built starting with the original revealJS repository.  I've kept a great deal of the original documentation below.
+
+To get this running locally, run the npm instructions for grunt and start the grunt server - edit to your heart's content!
+
+
+
+
+# reveal.js Original Docs: [![Build Status](https://travis-ci.org/hakimel/reveal.js.png?branch=master)](https://travis-ci.org/hakimel/reveal.js)
 
 A framework for easily creating beautiful presentations using HTML. [Check out the live demo](http://lab.hakim.se/reveal-js/).
 
