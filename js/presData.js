@@ -68,6 +68,26 @@ var project = {
 				}
 			]
 		},
+		{
+			name: "Sprint 4",
+			start: "4/15/2014",
+			end: "4/25/2014",
+			status: "Not Started",
+			subSprints: [
+				{
+					name: "Sprint 4a",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Not Started"
+				},
+				{
+					name: "Sprint 4b",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Not Started"
+				}
+			]
+		}
 	],
 
 	// All Helper Functions have been put here - they use the data entered above

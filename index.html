@@ -48,7 +48,7 @@
 				min-width: 250px;
 			}
 			.sprint-row{
-				height: 200px;
+
 			}
 			.bubble{
 				border: 1px solid gray;
@@ -88,6 +88,32 @@
 								</table>		
 					</script>								
 				</section>
+				<section id="sprintStatus">
+						<script id="sprintStatusTemplate" type="text/x-handlebars-template">
+						<h2>Sprint Status</h2>
+						<table width="100%" height="80%">
+							<tr>
+								<td>
+									<table width="100%" >
+										{{#each}}
+										<tr class="sprint-row" style="border-bottom: 1px; solid; gray">
+											<td class="bubble">{{ name }} Status: ><br/><span class="btn {{ getStatusButtonClass status }} sprint-status">{{ status }}</span>
+											</td>
+											{{#each subSprints}}						
+												<td class="bubble"><h4>{{ name }}</h4>
+													{{ formatDate start }} start<br/>
+													{{ formatDate end }} end<br/>
+													<span class="btn {{getStatusButtonClass status}}">{{ status }}</span></br>
+												</td>
+											{{/each}}
+										</tr>
+										{{/each}}
+									</table>
+								</td>
+							</tr>
+						</table>
+					</script>
+				</section>				
 				<section id="sprintOverview">
 					<script id="sprintOverviewTemplate" type="text/x-handlebars-template">
 						{{#each}}
@@ -150,40 +176,6 @@
 						</script>
 					</section>		
 				</section>
-				<section>
-					<h2>Sprint Status</h2>
-					<table width="100%" height="100%">
-						<tr>
-							<td class>
-								<table>
-									<tr class="sprint-row"><td class="bubble">Sprint 1 Status: ><br/><span class="btn btn-success sprint-status"> IN PROGRESS </span></td></tr>
-									<tr class="sprint-row"><td class="inactive bubble">Sprint 2 Status: <span class="btn btn-info sprint-status"> Not Started </span></td></tr>
-									<tr class="sprint-row"><td class="inactive bubble">Sprint 3 Status: <span class="btn btn-info sprint-status"> Not Started </span></td></tr>
-								</table>
-							</td>
-							<td width="125px">
-								<h4>Current<br/>
-									Sprint<br/>
-									Details<br/>
-									>>></h4>
-	
-							</td>
-							<td>
-								<table>
-									<tr class="sprint-row"><td class="inactive bubble"><h2>Sprint 1a</h2>
-										4.15.2014 start<br/>
-										4.29.2014 end<br/>
-										<span class="btn btn-success">Complete</span><br/><br/></td></tr>
-									<tr class="sprint-row"><td class="bubble"><h2>Sprint 1b</h2>
-											4.30.2014 start<br/>
-											<span class="btn btn-primary">In Progress</span>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</section>
 <!-- 				<section>
 					<h3>Sprint Cumulative Flow</h3>
 					<table>
@@ -230,6 +222,22 @@
 					</table>
 				</section>
 				<section>
+					<h2>Cumulative Flow - SubProject 2</h2>
+					<table>
+						<tr>
+							<td id="stackedChart4" style="vertical-align:middle"><h5 style="text-align:center">Project 1</h5><svg style="height:600px;width:800px"></svg></td>
+							<td style="vertical-align:middle">
+								<ul>
+									<li>Metric 1: 25</li>
+									<li>Metric 2: 40</li>
+									<li>Metric 3: 50%</li>
+									<li>Metric 5: 25%</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</section>				
+<!-- 				<section>
 					<h2>Two Charts Side By Side - Amazing.</h2>
 					<table>
 						<tr>
@@ -254,22 +262,10 @@
 							</td>
 						</tr>
 					</table>
-				</section>
-
-				<section>
-					<h2>Browser Support Caveat</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						Also - this uses D3.js for charting, which requires a modern browser that supports SVG. (IE9 supported but not well)
-					</p>
-				</section>
+				</section> -->
 				<section>
 					<h2>Next Steps for this Project</h2>
 					<ul>
-						<li>Separate data from display / prototype layer</li>
 						<li>Complete the layout for the testing coverage dashboard</li>
 						<li>Create easy-entry data structure for Cumulative Flow Diagram</li>
 						<li>Complete update instructions</li>
@@ -308,7 +304,6 @@
 		<script>
 			$(document).ready(function(){
 				var source = $("#sprintOverviewTemplate").html(); 
-				console.log("Source Template");
 				var template = Handlebars.compile(source); 	
 				$('#sprintOverview').append( template(project.sprints) );
 
@@ -316,10 +311,14 @@
 				var overviewTemplate = Handlebars.compile(overview); 							
 				$('#releaseOverview').append( overviewTemplate(project) );
 
+				var sprintStatus = $("#sprintStatusTemplate").html(); 
+				var sprintStatusTemplate = Handlebars.compile(sprintStatus); 	
+				$('#sprintStatus').append( sprintStatusTemplate(project.sprints) );
+
 				initialize();
 			});
 
-			
+
 			Handlebars.registerHelper("formatDate", function(date){
 			  console.log("Date: ", date);
 			  date = new Date(date);
@@ -374,44 +373,43 @@
 
 		<script>
 		//Script to build the NVD3 Stacked Chart
-		function buildD3(targetId){
+		function buildLine(targetId){
 			nv.addGraph(function() {
-				  var chart = nv.models.stackedAreaChart()
-				                .x(function(d) { return d[0] })
-				                .y(function(d) { return d[1] })
-				                .clipEdge(true)
-				                .useInteractiveGuideline(false)
-				      			.showLegend(false)
-				      			.showControls(false)
-				                ;
+			  var chart = nv.models.lineChart()
+			                .x(function(d) { return d[0] })
+			                .y(function(d) { return d[1] })
+			                .clipEdge(true)
+			                .useInteractiveGuideline(true)
+			                ;
 
-				  chart.xAxis
-				      .showMaxMin(false)
-				      .tickFormat(function(d) { return d3.time.format('%x')(new Date(d)) });
+			  chart.xAxis
+			      .showMaxMin(false)
+			      .tickFormat(d3.format(',.2f'));
 
-				  chart.yAxis
-				      .tickFormat(d3.format(',.2f'));
+			  chart.yAxis
+			      .tickFormat(d3.format(',.2f'));
 
-				  d3.select( targetId + ' svg')
-				    .datum(data) // Data variable is specified here
-				      .transition().duration(500).call(chart);
+			  d3.select(targetId + ' svg')
+			    .datum(data)
+			      .transition().duration(500).call(chart);
 
-				  nv.utils.windowResize(chart.update);
+			  nv.utils.windowResize(chart.update);
 
-				  return chart;
+			  return chart;
 			});
+
 
 		}
 		
 		// Create any required graph instances
-		buildD3("#stackedChart1");
-		buildD3("#stackedChart2");
-		buildD3("#stackedChart3");
-		buildD3("#stackedChart4");
-		buildD3("#stackedChart5");
-		buildD3("#stackedChart6");
-		buildD3("#stackedChart7");
-		buildD3("#stackedChart8");
+		buildLine("#stackedChart1");
+		buildLine("#stackedChart2");
+		buildLine("#stackedChart3");
+		buildLine("#stackedChart4");
+		buildLine("#stackedChart5");
+		buildLine("#stackedChart6");
+		buildLine("#stackedChart7");
+		buildLine("#stackedChart8");
 
 		// Script to build the Burndown Chart.
 		function buildBurndown(targetId){

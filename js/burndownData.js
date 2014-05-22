@@ -3,8 +3,8 @@ function burndownData() {
       cos = [];
 
   for (var i = 0; i < 100; i++) {
-    sin.push({x: i, y: 100-i });
-    cos.push({x: i, y: 100-(i/2)});
+    sin.push({x: i, y: i });
+    cos.push({x: i, y: (i*2)/5 });
   }
 
   return [
