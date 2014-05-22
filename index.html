@@ -17,10 +17,13 @@
 		<link rel="stylesheet" href="css/reveal.min.css">
 		<link rel="stylesheet" href="css/theme/default.css" id="theme">
 
+
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
-
+		<!-- For D3 Charts -->
 		<link rel="stylesheet" href="css/nv.d3.min.css">
+		<!-- For Button Elements -->
+		<link rel="stylesheet" href="css/bootstrap.min.css">
 
 		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
 		<script>
@@ -37,6 +40,20 @@
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
 
+		<style>
+			.inactive{
+				opacity: .3;
+			}
+			.sprint-status{
+				min-width: 250px;
+			}
+			.sprint-row{
+				height: 200px;
+			}
+			.bubble{
+				border: 1px solid gray;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -53,26 +70,120 @@
 					</p>
 				</section>	
 				<section>
+					<h3>Release Overview</h3>
+					<table>
+						<tr>
+							<td id="burnChart1" ><svg style="height:600px;width:800px"></svg></td><td style="vertical-align:middle">
+							<ul>
+								<li><b>4.15.2014</b> start date</li>
+								<li><b>7.17.2014</b> end date</li>
+								<li><b>67</b> days remaining</li>
+								<li><b>411</b> total points</li>
+								<li><b>354</b> points remaining</li>
+							</td>
+						</tr>
+						<tr><td colspan=2> This is a placeholder for bottom text if needed</td>
+					</table>					
+				</section>
+				<!-- Sections with data-markdown attributes are interpreted Markdown Scripts
+					For additional information about Markdown, see this cheat sheet 
+					https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists
+
+					If preferred, you can use a Markdown authoring tool and then paste in the results.
+					Options such as Draftin.com and Prose.io are recommended. -->
+
+				<section>
+					<section data-markdown>
+					    <script type="text/template">
+					        ## Release 1 Goals
+					        #### Milestone 1: Business Related Objectives
+
+					        1. Vice wayfarers disrupt, you probably havent heard of them distillery eiusmod organic bitters sunt. Ennui pork belly street art ea, Thundercats duis sartorial Pitchfork distillery nisi authentic readymade freegan excepteur lomo.
+
+					        2. Before they sold out beard banjo, Echo Park mumblecore YOLO VHS Schlitz sed consequat leggings minim 3 wolf moon mustache squid. Cray consequat VHS adipisicing shabby chic non. 
+
+					        3. Int cliche tempor, distillery swag craft beer retro biodiesel aliqua vegan beard deep v. Craft beer velit ugh hoodie, Intelligentsia Marfa beard +1. Assumenda cardigan post-ironic vero anim bespoke.
+
+					    </script>
+					</section>
+					<section data-markdown>
+					    <script type="text/template">
+					    ## Milestone 1: Integration Objectives
+
+				        - Tempor crucifix polaroid, deserunt scenester occaecat fap hoodie direct trade aesthetic. Fap stumptown culpa, Brooklyn kogi roof party American Apparel street art swag. 
+
+				        - Pickled Vice qui plaid fap, selvage lo-fi church-key biodiesel art party. Irony kogi id irure. Delectus ea +1 hoodie, salvia crucifix laboris cillum. Farm-to-table McSweeneys Carles, sunt biodiesel sustainable Austin hella direct trade. Fugiat disrupt sartorial, street art PBR&B ethnic Schlitz Odd Future.
+
+					    </script>
+					</section>		
+					<section data-markdown>
+						<script type="text/template">
+						## Milestone 1: Integration(continued)
+						The steps below assert the test scenario to satisfy the above:
+
+						1. Eiusmod whatever aliquip cornhole Austin Intelligentsia
+						2. Irony sustainable drinking vinegar nihil labore enim, laboris pariatur hoodie cliche
+						3. Pinterest dolore cred chia Godard, Brooklyn dreamcatcher keytar Schlitz irure roof party cornhole vegan.  
+						4. Sunt twee mumblecore, next level small batch DIY nisi messenger bag
+						5. Commit the new plan/adoption agreement 
+						6. Food truck Tumblr odio chillwave sartorial, post-ironic tote bag selfies dolore +1.
+						7. Dolore nostrud selvage, bicycle rights ethnic Bushwick excepteur consectetur wolf.
+						</script>
+					</section>		
+				</section>
+				<section>
+					<h2>Sprint Status</h2>
+					<table width="100%" height="100%">
+						<tr>
+							<td class>
+								<table>
+									<tr class="sprint-row"><td class="bubble">Sprint 1 Status: ><br/><span class="btn btn-success sprint-status"> IN PROGRESS </span></td></tr>
+									<tr class="sprint-row"><td class="inactive bubble">Sprint 2 Status: <span class="btn btn-info sprint-status"> Not Started </span></td></tr>
+									<tr class="sprint-row"><td class="inactive bubble">Sprint 3 Status: <span class="btn btn-info sprint-status"> Not Started </span></td></tr>
+								</table>
+							</td>
+							<td width="125px">
+								<h4>Current<br/>
+									Sprint<br/>
+									Details<br/>
+									>>></h4>
+	
+							</td>
+							<td>
+								<table>
+									<tr class="sprint-row"><td class="inactive bubble"><h2>Sprint 1a</h2>
+										4.15.2014 start<br/>
+										4.29.2014 end<br/>
+										<span class="btn btn-success">Complete</span><br/><br/></td></tr>
+									<tr class="sprint-row"><td class="bubble"><h2>Sprint 1b</h2>
+											4.30.2014 start<br/>
+											<span class="btn btn-primary">In Progress</span>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</section>
+<!-- 				<section>
 					<h3>Sprint Cumulative Flow</h3>
 					<table>
 						<tr>
-							<td id="stackedChart1" ><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p >These are real Charts.</p></td>
-							<td id="stackedChart2" ><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout">They use NVD3.js to present real data.</p></td>
+							<td id="stackedChart1" ><svg style="height:500px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p >These are real Charts.</p></td>
+							<td id="stackedChart2" ><svg style="height:500px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout">They use NVD3.js to present real data.</p></td>
 						</tr>
 						<tr>
 							<td id="stackedChart3"><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout"><a href="http://nvd3js.com">They're Interactive (click them).  <br/> Also here's a Link.</a></p></td>
 							<td id="stackedChart4"><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout" style="font-size:10px;">Maybe we put some text here that's smaller?</p>How about more normal text?</td>
 						</tr>
 					</table>
-				</section>
+				</section> -->
 				<section>
-					<h3>Or Maybe you Prefer 2 Across?</h3>
+					<h2>Cumulative Flow - Combined</h2>
 					<table>
 						<tr>
-							<td id="stackedChart5" ><h5 style="text-align:center">Project 1</h5><svg style="height:600px;width:600px"></svg></td>
-							<td id="stackedChart6" ><h5 style="text-align:center">Project 2</h5><svg style="height:600px;width:600px"></svg></td>
-						</tr><tr>
-							<td>
+							<td id="stackedChart5" style="vertical-align:middle"><h4 style="text-align:center">Project 1</h4><svg style="height:600px;width:800px"></svg></td>
+							<td style="vertical-align:middle">
 								<ul>
 									<li>Metric 1: 25</li>
 									<li>Metric 2: 40</li>
@@ -80,9 +191,17 @@
 									<li>Metric 5: 25%</li>
 								</ul>
 							</td>
-							<td >
+						</tr>
+					</table>
+				</section>
+				<section>
+					<h2>Cumulative Flow - SubProject 1</h2>
+					<table>
+						<tr>
+							<td id="stackedChart3" style="vertical-align:middle"><h5 style="text-align:center">Project 1</h5><svg style="height:600px;width:800px"></svg></td>
+							<td style="vertical-align:middle">
 								<ul>
-									<li><b>Metric 1:</b> 25</li>
+									<li>Metric 1: 25</li>
 									<li>Metric 2: 40</li>
 									<li>Metric 3: 50%</li>
 									<li>Metric 5: 25%</li>
@@ -92,7 +211,7 @@
 					</table>
 				</section>
 				<section>
-					<h3>The data is more visible on a monitor on loop.</h3>
+					<h2>Two Charts Side By Side - Amazing.</h2>
 					<table>
 						<tr>
 							<td id="stackedChart7" ><h5 style="text-align:center">Project 3</h5><svg style="height:600px;width:600px"></svg></td>
@@ -119,7 +238,7 @@
 				</section>
 
 				<section>
-					<h2>Heads Up - Browser Support Caveat</h2>
+					<h2>Browser Support Caveat</h2>
 					<p>
 						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
 						support for CSS 3D transforms to see it in its full glory.
@@ -127,6 +246,15 @@
 					<p>
 						Also - this uses D3.js for charting, which requires a modern browser that supports SVG. (IE9 supported but not well)
 					</p>
+				</section>
+				<section>
+					<h2>Next Steps for this Project</h2>
+					<ul>
+						<li>Separate data from display / prototype layer</li>
+						<li>Complete the layout for the testing coverage dashboard</li>
+						<li>Create easy-entry data structure for Cumulative Flow Diagram</li>
+						<li>Complete update instructions</li>
+					</ul>
 				</section>
 
 				<section>
@@ -139,17 +267,21 @@
 
 		</div>
 
+		<!-- Data Sources -->
+		<script type="text/javascript" src="js/data.js"></script>
+		<script type="text/javascript" src="js/burndownData.js"></script>
+
+		<!-- Required Script Includes -->
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
 		<script type="text/javascript" src="js/amcharts.js"></script>
 		<script type="text/javascript" src="js/serial.js"></script>
-		<script type="text/javascript" src="js/data.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/nv.d3.min.js"></script>
 
 
 		<script>
-
+			// Main REVEAL.JS Configuration
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
@@ -157,7 +289,7 @@
 				progress: true,
 				history: true,
 				center: true,
-			    width: 1400,
+			    width: 1580,
     			height: 900,
     			autoSlide: 5000,
     			loop: true,
@@ -181,7 +313,9 @@
 			});
 
 		</script>
+
 		<script>
+		//Script to build the NVD3 Stacked Chart
 		function buildD3(targetId){
 			nv.addGraph(function() {
 				  var chart = nv.models.stackedAreaChart()
@@ -201,7 +335,7 @@
 				      .tickFormat(d3.format(',.2f'));
 
 				  d3.select( targetId + ' svg')
-				    .datum(data)
+				    .datum(data) // Data variable is specified here
 				      .transition().duration(500).call(chart);
 
 				  nv.utils.windowResize(chart.update);
@@ -211,6 +345,7 @@
 
 		}
 		
+		// Create any required graph instances
 		buildD3("#stackedChart1");
 		buildD3("#stackedChart2");
 		buildD3("#stackedChart3");
@@ -220,7 +355,40 @@
 		buildD3("#stackedChart7");
 		buildD3("#stackedChart8");
 
+		// Script to build the Burndown Chart.
+		function buildBurndown(targetId){
+			nv.addGraph(function() {
+			  var chart = nv.models.lineChart()
+			    .useInteractiveGuideline(true)
+			    ;
+
+			  chart.xAxis
+			    .axisLabel('Days')
+			    .tickFormat(d3.format(',r'))
+			    ;
+
+			  chart.yAxis
+			    .axisLabel('Points')
+			    .tickFormat(d3.format('.02f'))
+			    ;
+
+			  d3.select(targetId + ' svg')
+			    .datum(burndownData()) // Data variable specified here - if your data is not a function, then remove the extra ()
+			    .transition().duration(500)
+			    .call(chart)
+			    ;
+
+			  nv.utils.windowResize(chart.update);
+			 
+			  return chart;
+			});
+		}
+
+		//Create the graph instances
+		buildBurndown('#burnChart1')
+
 		</script>
+
 
 	</body>
 </html>
