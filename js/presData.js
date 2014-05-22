@@ -1,62 +1,87 @@
 var project = {
-	start: new Date("4/15/2014"),
-	end: new Date("7/17/2014"),
-	today: new Date(),
-	daysRemaining: function(){
-		return this.today - this.end;
-	},
-	totalPoints: 411,
-	pointsCompleted: 57,
+	//Place General Project Data Here:
+	start: "4/15/2014",
+	end: "7/17/2014",
+	description: "This slide and the sprint slides are all pulled dynamically from a JSON object. Wiring up a web API will be easy because this all uses Handlebars.JS",
+	totalPoints: 411, // Total number of points for the entire project / release
+	pointsCompleted: 57, // Sum total of all points completed to date
+
+	//Enter Sprint Details Below
+	sprints: [
+		{
+			name: "Sprint 1",
+			start: "4/15/2014",
+			end: "4/25/2014",
+			status: "Completed",
+			subSprints: [
+				{
+					name: "Sprint 1a",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Completed"
+				},
+				{
+					name: "Sprint 1b",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Completed"
+				}
+			]
+		},
+			{
+			name: "Sprint 2",
+			start: "4/15/2014",
+			end: "4/25/2014",
+			status: "In Progress",
+			subSprints: [
+				{
+					name: "Sprint 2a",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "In Progress"
+				},
+				{
+					name: "Sprint 2b",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Not Started"
+				}
+			]
+		},
+		{
+			name: "Sprint 3",
+			start: "4/15/2014",
+			end: "4/25/2014",
+			status: "Not Started",
+			subSprints: [
+				{
+					name: "Sprint 3a",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Not Started"
+				},
+				{
+					name: "Sprint 3b",
+					start: "4/25/2014",
+					end: "5/05/2014",
+					status: "Not Started"
+				}
+			]
+		},
+	],
+
+	// All Helper Functions have been put here - they use the data entered above
+	// to present data in a different format that is more useful for the slides.
 	pointsRemaining: function(){
 		return this.totalPoints - this.pointsCompleted;
 	},
-	description: "This is a project description that will go on the page somewhere"
+	daysRemaining: function(){
+		var end = new Date( this.end );
+		console.log("Days Remaining End: ", end);
+		var today = new Date();
+		console.log("Today: ", today);
+		console.log("End minus Today: ", end-today );
+		return Math.round( (end-today)/(1000*60*60*24) );
+	}
 };
 
-var sprintSummary = {
-	"Sprint 1": {
-		start: new Date("4/15/2014"),
-		end: new Date("4/25/2014"),
-		status: "Completed",
-		"Sprint 1a": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Completed"
-		},
-		"Sprint 1b": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Completed"
-		}
-	},
-	"Sprint 2": {
-		start: new Date("4/25/2014"),
-		end: new Date("5/05/2014"),
-		status: "In Progress",
-		"Sprint 2a": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Completed"
-		},
-		"Sprint 2b": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Completed"
-		}
-	},
-	"Sprint 3": {
-		start: new Date("5/05/2014"),
-		end: new Date("5/19/2014"),
-		status: "Not Started",
-		"Sprint 3a": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Not Started"
-		},
-		"Sprint 3b": {
-			start: new Date("4/25/2014"),
-			end: new Date("5/05/2014"),
-			status: "Not Started"
-		}
-	},
-};

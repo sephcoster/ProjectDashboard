@@ -58,10 +58,11 @@
 
 	<body>
 
-		<div class="reveal">
+		<div class="reveal" >
 
 			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+			<div class="slides" id="mainSlides">
+
 				<section>
 					<h1>Project Dashboard Prototype</h1>
 					<h3>Automated Project Data in a Pretty Format.</h3>
@@ -69,21 +70,39 @@
 						<small>Created by <a href="http://sephcoster.com">Seph Coster</a> / <a href="http://twitter.com/sephcoster">@sephcoster</a></small><br/> <small>based on the beautiful, elegant and simple (not easy) work by <a href="http://hakim.se">Hakim El Hattab</a></small>
 					</p>
 				</section>	
-				<section>
-					<h3>Release Overview</h3>
-					<table>
-						<tr>
-							<td id="burnChart1" ><svg style="height:600px;width:800px"></svg></td><td style="vertical-align:middle">
-							<ul>
-								<li><b>4.15.2014</b> start date</li>
-								<li><b>7.17.2014</b> end date</li>
-								<li><b>67</b> days remaining</li>
-								<li><b>411</b> total points</li>
-								<li><b>354</b> points remaining</li>
-							</td>
-						</tr>
-						<tr><td colspan=2> This is a placeholder for bottom text if needed</td>
-					</table>					
+				<section id="releaseOverview">
+					<script id="releaseOverviewTemplate" type="text/x-handlebars-template">
+						<h3>Project Overview</h3>
+								<table>
+									<tr>
+										<td id="burnChart1" ><svg style="height:600px;width:800px"></svg></td><td style="vertical-align:middle">
+										<ul>
+											<li><b>{{formatDate start }}</b> start date</li>
+											<li><b>{{formatDate end }}</b> end date</li>
+											<li><b>{{ daysRemaining }}</b> days remaining</li>
+											<li><b>{{ totalPoints }}</b> total points</li>
+											<li><b>{{ pointsRemaining }}</b> points remaining</li>
+										</td>
+									</tr>
+									<tr><td colspan=2> {{ description }}</td>
+								</table>		
+					</script>								
+				</section>
+				<section id="sprintOverview">
+					<script id="sprintOverviewTemplate" type="text/x-handlebars-template">
+						{{#each}}
+						<section>
+						<h2>{{ name }}</h2>
+						<h3>Sprint Start: {{ formatDate start }} </h4>
+						<h3>Status: <span class="btn sprint-status {{getStatusButtonClass status}}"> {{ status }} </span></h3>
+						<h3>SubSprints:</h4>
+							{{#each subSprints}}
+								<li>SubSprint Name: {{ name }}</li>
+								<li>SubSprint Status {{ status }}</li>
+							{{/each}}
+						</section>
+						{{/each}}
+					</script>					
 				</section>
 				<!-- Sections with data-markdown attributes are interpreted Markdown Scripts
 					For additional information about Markdown, see this cheat sheet 
@@ -267,20 +286,59 @@
 
 		</div>
 
-		<!-- Data Sources -->
-		<script type="text/javascript" src="js/data.js"></script>
-		<script type="text/javascript" src="js/burndownData.js"></script>
 
 		<!-- Required Script Includes -->
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
 		<script type="text/javascript" src="js/amcharts.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/serial.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js" charset="utf-8"></script>
 		<script type="text/javascript" src="js/nv.d3.min.js"></script>
 
+		<!-- For JavaScript Templating (Handlebars.js) -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
+
+		<!-- Data Sources -->
+		<script type="text/javascript" src="js/data.js"></script>
+		<script type="text/javascript" src="js/burndownData.js"></script>
+		<script type="text/javascript" src="js/presData.js"></script>
+
 
 		<script>
+			$(document).ready(function(){
+				var source = $("#sprintOverviewTemplate").html(); 
+				console.log("Source Template");
+				var template = Handlebars.compile(source); 	
+				$('#sprintOverview').append( template(project.sprints) );
+
+				var overview = $("#releaseOverviewTemplate").html(); 
+				var overviewTemplate = Handlebars.compile(overview); 							
+				$('#releaseOverview').append( overviewTemplate(project) );
+
+				initialize();
+			});
+
+			
+			Handlebars.registerHelper("formatDate", function(date){
+			  console.log("Date: ", date);
+			  date = new Date(date);
+			  if (typeof(date) == "undefined") {
+			    return "Unknown";
+			  }
+			  console.log("Date getMonth: ", date.getMonth());
+			  return date.getMonth() + "." + date.getDay() + "." + date.getFullYear();
+			});
+
+			Handlebars.registerHelper('getStatusButtonClass', function(currentStatus){
+					var classMap = {'In Progress': 'btn-primary', 'Completed': 'btn-success', 'Not Started': 'btn-info', 'Not Completed': 'btn-warning'};
+					console.log("Class Map Var: ", classMap[currentStatus]);
+					return classMap[ currentStatus ];
+			});
+		</script>	
+
+		<script>
+		function initialize(){
 			// Main REVEAL.JS Configuration
 			// Full list of configuration options available here:
 			// https://github.com/hakimel/reveal.js#configuration
@@ -311,7 +369,7 @@
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
-
+		}
 		</script>
 
 		<script>
