@@ -1,8 +1,5 @@
 
 			$(document).ready(function(){
-				var source = $("#sprintOverviewTemplate").html(); 
-				var template = Handlebars.compile(source); 	
-				$('#sprintOverview').append( template(project.sprints) );
 
 				var overview = $("#releaseOverviewTemplate").html(); 
 				var overviewTemplate = Handlebars.compile(overview); 							
@@ -16,9 +13,48 @@
 				var testDataTemplate = Handlebars.compile(testData); 	
 				$('#testData').append( testDataTemplate(testingData) );
 
+				var cumulativeFlow = $("#cumulativeFlowTemplate").html(); 
+				var cumulativeFlowTemplate = Handlebars.compile(cumulativeFlow); 	
+				$('#cumulativeFlow').append( cumulativeFlowTemplate(flowData) );
+
+				var buildData = $("#buildDataTemplate").html(); 
+				var buildDataTemplate = Handlebars.compile(buildData); 	
+				$('#buildData').append( buildDataTemplate(project) );
+
 				initialize();
 			});
 
+			// Automated Page Refresh after XXX interval without key press. 
+			var time = new Date().getTime();
+			$(document.body).bind("mousemove keypress", function(e) {
+				time = new Date().getTime();
+			});
+
+			var refreshTimeframe = 15;  // Number of minutes the screen should refresh data.
+										// If dynamic data can implement long-polling
+			function refresh() {
+				if(new Date().getTime() - time >= (60000*refreshTimeframe) ){
+					Reveal.next();
+					window.location.reload(true);
+				} else
+					setTimeout(refresh, 3000);
+			}
+
+			 setTimeout(refresh, 3000);
+
+			// Handlebar Helpers
+			Handlebars.registerHelper('statusCheck', function(field, status, options) {
+			  if(field == status) {
+			    return options.fn(this);
+			  } else {
+			    return;
+			  }
+			});
+
+			Handlebars.registerHelper("buildStatusImage", function(status){
+				imgObj = {"SUCCESS": "img/passing.png", "FAIL": "img/failing.png", "Error": "img/error.png"};
+				return imgObj[status];
+			});
 
 			Handlebars.registerHelper("formatDate", function(date){
 			  console.log("Date: ", date);
@@ -99,14 +135,13 @@
 		}
 		
 		// Create any required graph instances
-		buildLine("#stackedChart1", data);
-		buildLine("#stackedChart2", data);
-		buildLine("#stackedChart3", data);
-		buildLine("#stackedChart4", data);
-		buildLine("#stackedChart5", data);
-		buildLine("#stackedChart6", data);
-		buildLine("#stackedChart7", data);
-		buildLine("#stackedChart8", data);
+		$.each(flowData, function(i, val){
+			console.log("I: ", i, "& val: ", val);
+			var data = flowData[i].data;
+			var idName = "#" + flowData[i].shortName;
+			console.log("idName: ", idName);
+			buildLine(idName, data);
+		});
 
 		$.each(testingData, function(i, val){
 			console.log("I: ", i, "& val: ", val);
@@ -153,3 +188,55 @@
 
 		//Create the graph instances
 		buildBurndown('#burnChart1')
+
+//This is a nested mess that calculates cumulative project data information.
+function getCumulative(){
+  // Outline the sprints that will be used to sum this data.
+  // ALso create placeholder arrays for all of the different data types across the sprints
+
+  var sprintData = [flowData.sprint1.data, flowData.sprint2.data, flowData.sprint3.data];
+  
+  // For each of the above sprint datasets (this will loop three times)
+  for (var i=0; i< sprintData.length; i++){
+    
+    // For each object inside each data set (this will loop four times)
+    $.each(sprintData[i], function(index, val){
+      var vals = val.values;
+      var keyVal = val.key;
+      console.log("keyVal: ", keyVal);
+      var keyArray = arrayHolder[keyVal]; //The placeholder we'll be using is the one for that specific cumulative chart
+      console.log("Key Array: ", keyArray);
+      //If there's nothing in the backlog, then concatenate this to the backlog array.
+      if (keyArray.length === 0){
+          //Concatenate the values in our collector to the values in this array.
+          keyArray.push.apply(keyArray, vals);
+        //Otherwise...
+
+        } else {
+          //Get the current length of the backlog (or test, etc) array (number of days recorded)
+          var increment = keyArray.length;
+          //Get the last number of backlog items from each sprint and add it to all the point values.
+          var lastMax = keyArray[keyArray.length-1][1];
+          //Then, for each of these values, add the number of existing days to the number of days in the sprint to get cumulative days.
+
+          $.each(vals, function(j, val){
+            vals[j][0] = vals[j][0] + increment;
+            vals[j][1] = vals[j][1] + lastMax;
+          });
+          console.log("Vals after Increment: ", vals);
+
+
+
+          //Once you've added all the days, concatenate the existing array val to that specific data type (backlog, etc)
+          keyArray.push.apply(keyArray, vals);
+        }
+
+      });  // End loop inside sprint
+    console.log("Array Holder after sprint:", arrayHolder);    
+    } // End loop of all sprints.
+    console.log("Array Holder just after loop:", arrayHolder);
+    return [{"key": "Development", "values": arrayHolder["Development"], area:true}, {"key": "Test", "values": arrayHolder["Test"], area:true}, 
+            {"key": "Done", "values": arrayHolder["Done"], area:true} ]
+    //flowData.cumulative.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
+    console.log(flowData);
+  }

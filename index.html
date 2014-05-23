@@ -52,6 +52,7 @@
 			}
 			.bubble{
 				border: 1px solid gray;
+				width: 500px;
 			}
 		</style>
 	</head>
@@ -97,15 +98,22 @@
 									<table width="100%" >
 										{{#each}}
 										<tr class="sprint-row" style="border-bottom: 1px; solid; gray">
-											<td class="bubble">{{ name }} Status: ><br/><span class="btn {{ getStatusButtonClass status }} sprint-status">{{ status }}</span>
+											<td class="bubble">{{ name }} Status: <br/><span class="btn {{ getStatusButtonClass status }} sprint-status">{{ status }}</span><br/>
+											{{#statusCheck status "In Progress"}}
+											<br/>CURRENT STATUS >>>
+											{{/statusCheck}}
+											<br/><br/>
 											</td>
-											{{#each subSprints}}						
-												<td class="bubble"><h4>{{ name }}</h4>
-													{{ formatDate start }} start<br/>
-													{{ formatDate end }} end<br/>
-													<span class="btn {{getStatusButtonClass status}}">{{ status }}</span></br>
-												</td>
-											{{/each}}
+											{{#statusCheck status "In Progress"}}
+
+												{{#each subSprints}}						
+													<td class="bubble"><h4>{{ name }}</h4>
+														{{ formatDate start }} start<br/>
+														{{ formatDate end }} end<br/>
+														<span class="btn {{getStatusButtonClass status}}">{{ status }}</span></br>
+													</td>
+												{{/each}}
+											{{/statusCheck }}
 										</tr>
 										{{/each}}
 									</table>
@@ -114,22 +122,6 @@
 						</table>
 					</script>
 				</section>				
-				<section id="sprintOverview">
-					<script id="sprintOverviewTemplate" type="text/x-handlebars-template">
-						{{#each}}
-						<section>
-						<h2>{{ name }}</h2>
-						<h3>Sprint Start: {{ formatDate start }} </h4>
-						<h3>Status: <span class="btn sprint-status {{getStatusButtonClass status}}"> {{ status }} </span></h3>
-						<h3>SubSprints:</h4>
-							{{#each subSprints}}
-								<li>SubSprint Name: {{ name }}</li>
-								<li>SubSprint Status {{ status }}</li>
-							{{/each}}
-						</section>
-						{{/each}}
-					</script>					
-				</section>
 				<!-- Sections with data-markdown attributes are interpreted Markdown Scripts
 					For additional information about Markdown, see this cheat sheet 
 					https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#lists
@@ -176,67 +168,29 @@
 						</script>
 					</section>		
 				</section>
-<!-- 				<section>
-					<h3>Sprint Cumulative Flow</h3>
-					<table>
-						<tr>
-							<td id="stackedChart1" ><svg style="height:500px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p >These are real Charts.</p></td>
-							<td id="stackedChart2" ><svg style="height:500px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout">They use NVD3.js to present real data.</p></td>
-						</tr>
-						<tr>
-							<td id="stackedChart3"><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout"><a href="http://nvd3js.com">They're Interactive (click them).  <br/> Also here's a Link.</a></p></td>
-							<td id="stackedChart4"><svg style="height:400px;width:400px"></svg></td><td style="width:200px; vertical-align:middle" valign="top"><p class="graph-callout" style="font-size:10px;">Maybe we put some text here that's smaller?</p>How about more normal text?</td>
-						</tr>
-					</table>
-				</section> -->
-				<section>
-					<h2>Cumulative Flow - Combined</h2>
-					<table>
-						<tr>
-							<td id="stackedChart5" style="vertical-align:middle"><h4 style="text-align:center">Project 1</h4><svg style="height:600px;width:800px"></svg></td>
-							<td style="vertical-align:middle">
-								<ul>
-									<li>Metric 1: 25</li>
-									<li>Metric 2: 40</li>
-									<li>Metric 3: 50%</li>
-									<li>Metric 5: 25%</li>
-								</ul>
-							</td>
-						</tr>
-					</table>
+				<section id="cumulativeFlow">
+					<script id="cumulativeFlowTemplate" type="text/x-handlebars-template">
+					{{#each }}
+					<section>
+						<h2>Cumulative Flow - {{ name }}</h2>
+						<table>
+							<tr>
+								<td><div id="{{shortName}}" style="vertical-align:middle"><svg style="height:600px;width:800px"></svg></div></td>
+								<td style="vertical-align:middle">
+									<ul>
+										<li>Stories: {{ stories }}</li>
+										<li>Planned: {{ planned }}</li>
+										<li>In Progress: {{ inprogress }}</li>
+										<li>Complete: {{ complete }}</li>
+									</ul>
+								</td>
+							</tr>
+						</table>
+					</section>
+					{{/each}}
+					</script>
 				</section>
-				<section>
-					<h2>Cumulative Flow - SubProject 1</h2>
-					<table>
-						<tr>
-							<td id="stackedChart3" style="vertical-align:middle"><h5 style="text-align:center">Project 1</h5><svg style="height:600px;width:800px"></svg></td>
-							<td style="vertical-align:middle">
-								<ul>
-									<li>Metric 1: 25</li>
-									<li>Metric 2: 40</li>
-									<li>Metric 3: 50%</li>
-									<li>Metric 5: 25%</li>
-								</ul>
-							</td>
-						</tr>
-					</table>
-				</section>
-				<section>
-					<h2>Cumulative Flow - SubProject 2</h2>
-					<table>
-						<tr>
-							<td id="stackedChart4" style="vertical-align:middle"><h5 style="text-align:center">Project 1</h5><svg style="height:600px;width:800px"></svg></td>
-							<td style="vertical-align:middle">
-								<ul>
-									<li>Metric 1: 25</li>
-									<li>Metric 2: 40</li>
-									<li>Metric 3: 50%</li>
-									<li>Metric 5: 25%</li>
-								</ul>
-							</td>
-						</tr>
-					</table>
-				</section>	
+				
 				<section id="testData">
 					<script id="testDataTemplate" type="text/x-handlebars-template">
 					{{#each}}
@@ -257,7 +211,21 @@
 					{{/each}}
 					</script>
 
-				</section>							
+				</section>	
+				<section id="buildData">
+					<script id="buildDataTemplate" type="text/x-handlebars-template">
+						<h2>Current Build Status:</h2>
+						<img src="{{buildStatusImage buildStatus}}"/>
+						{{#each deployStatus}}
+						<h4>Last Build {{ deployName}}:</h4>
+							<ul>
+								<li><b>Build #:</b> {{deployNumber}}</li>
+								<li><b>Deploy Date:</b> {{deployDate}}</li>
+							</ul>
+							</br></br>
+						{{/each}}
+					</script>
+				</section>						
 <!-- 				<section>
 					<h2>Two Charts Side By Side - Amazing.</h2>
 					<table>

@@ -1,12 +1,12 @@
 var project = {
-	//Place General Project Data Here:
+	// ENTER GENERAL PROJECT DETAILS HERE:
 	start: "4/15/2014",
 	end: "7/17/2014",
-	description: "This slide and the sprint slides are all pulled dynamically from a JSON object. Wiring up a web API will be easy because this all uses Handlebars.JS",
+	description: "This slide, and the sprint slides are all pulled dynamically from a JSON object. Wiring up a web API will be easy because this all uses Handlebars.JS",
 	totalPoints: 411, // Total number of points for the entire project / release
 	pointsCompleted: 57, // Sum total of all points completed to date
 
-	//Enter Sprint Details Below
+	// ENTER SPRINT DETAILS BELOW:
 	sprints: [
 		{
 			name: "Sprint 1",
@@ -67,30 +67,22 @@ var project = {
 					status: "Not Started"
 				}
 			]
-		},
-		{
-			name: "Sprint 4",
-			start: "4/15/2014",
-			end: "4/25/2014",
-			status: "Not Started",
-			subSprints: [
-				{
-					name: "Sprint 4a",
-					start: "4/25/2014",
-					end: "5/05/2014",
-					status: "Not Started"
-				},
-				{
-					name: "Sprint 4b",
-					start: "4/25/2014",
-					end: "5/05/2014",
-					status: "Not Started"
-				}
-			]
 		}
 	],
-
-	buildStatus: "",
+	// ENTER BUILD AND DEPLOYMENT STATUS BELOW
+	buildStatus: "SUCCESS",
+	deployStatus: [
+		{
+			deployName: "TEST",
+			deployNumber: "5206",
+			deployDate: "5/12/2014"
+		},
+		{
+			deployName: "MOCK",
+			deployNumber: "5206",
+			deployDate: "5/12/2014"
+		}
+	],
 	// All Helper Functions have been put here - they use the data entered above
 	// to present data in a different format that is more useful for the slides.
 	pointsRemaining: function(){
