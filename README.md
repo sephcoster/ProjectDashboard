@@ -1,8 +1,30 @@
-#Project Dashboard - An agile project dashboard using RevealJS, NVD3.js, and Web Service Connections.
+# Project Dashboard
+## An agile project dashboard using RevealJS, NVD3.js, Handlebars.JS and JSON data
 
-As you can see from the repository, this is built starting with the original revealJS repository.  I've kept a great deal of the original documentation below.
+The goal of the project dashboard is to provide a useful template for project status updates based on dynamic data. The project should be easy to update, be capable of collecting data from existing web APIs, and presenting that data in a presentation-type format.
 
-To get this running locally, run the npm instructions for grunt and start the grunt server - edit to your heart's content!
+Starting with the original RevealJS repository, the author added NVD3.js libraries for live chart data and created multiple data source files for individual sources suited to mapping Software Development sprints.
+
+HandlebarsJS templates take this data and present it in the `<section>` format to create the slides.
+
+If web APIs exist with live sprint data, an onload function can be run prior to Reveal.JS initialization (the `initialize()` function).
+
+`index.html` is the main location for Handlebars HTML templates and the slide order.  All other scripts have been removed to separate concerns.
+
+Any content in `<section data-markdown>` sections are markdown syntax and should be updated accordingly.
+
+### Main JavaScript Functions / Data content
+`js/app.js` contains the main bulk of the Handlebars template calls and registered helpers, and also defines order of operations for data collection and reveal.js initialization.
+
+`js/projData.js` contains data about the overall development project at a high level including high level sprint data.  
+
+`js/flowData.js` contains cumulative flow data.
+
+`js/testData.js` contains test status data and coverage information.
+
+`js/burnData.js` tracks overall project burn-Up information.
+
+To get this running locally, follow the NPM instructions below, and run `grunt serve` in your reveal.js directory. Local development takes advantage of things like presentation notes and other features, but the entire project can run in an Amazon S3 bucket without issue.  Any static file host will do.
 
 
 
