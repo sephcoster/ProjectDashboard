@@ -16,11 +16,11 @@
         inprogress: 7,
         complete: 25,
         data: [
-        //{ 
-        //  "key" : "Backlog",
-        //  "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450],[11, 450],[12, 450],[13, 450],[14, 450] ],
-        //  "area" : true
-        //}, 
+        { 
+         "key" : "Backlog",
+         "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450]],
+         "area" : true
+        }, 
 
         { 
           "key" : "Development",
@@ -48,11 +48,11 @@
         inprogress: 7,
         complete: 25,
         data: [
-        // { 
-        //   "key" : "Backlog",
-        //   "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450],[11, 450],[12, 450],[13, 450],[14, 450] ],
-        //   "area" : true
-        // }, 
+        { 
+          "key" : "Backlog",
+          "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450]],
+          "area" : true
+        }, 
 
         { 
           "key" : "Development",
@@ -80,11 +80,11 @@
         inprogress: 7,
         complete: 25,
         data: [
-        // { 
-        //   "key" : "Backlog",
-        //   "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450],[11, 450],[12, 450],[13, 450],[14, 450] ],
-        //   "area" : true
-        // }, 
+        { 
+          "key" : "Backlog",
+          "values" : [ [ 0 , 411] , [ 1 , 411] , [ 2 , 411] , [ 3 , 450] , [ 4 , 450] , [ 5 , 450] , [ 6 , 450] , [7, 450], [8,450], [9,450],[10,450]],
+          "area" : true
+        }, 
 
         { 
           "key" : "Development",
@@ -157,7 +157,7 @@ function getCumulative(){
     console.log("Array Holder after sprint:", arrayHolder);    
     } // End loop of all sprints.
     console.log("Array Holder just after loop:", arrayHolder);
-    //flowData.cumulative.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
+    flowData.cumulative.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
     flowData.cumulative.data.push({"key": "Development", "values": arrayHolder["Development"], area:true});
     flowData.cumulative.data.push({"key": "Test", "values": arrayHolder["Test"], area:true});
     flowData.cumulative.data.push({"key": "Done", "values": arrayHolder["Done"], area:true});
