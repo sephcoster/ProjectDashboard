@@ -1,16 +1,16 @@
 		var flowData = {
-      cumulative: {
-        name: "Cumulative",
-        shortName: "cumulative",
+      combined: {
+        name: "All Teams",
+        shortName: "allteams",
         data: [],
         stories: 34,
         planned: 2,
         inprogress: 7,
         complete: 25
       },
-      sprint1: {
-        name: "Sprint 1",
-        shortName: "sprint1",
+      brv: {
+        name: "BRV",
+        shortName: "brv",
         stories: 34,
         planned: 2,
         inprogress: 7,
@@ -40,9 +40,9 @@
           "area": true
         }]
       },
-      sprint2: {
-        name: "Sprint 2",
-        shortName: 'sprint2',
+      ofs: {
+        name: "OF&S",
+        shortName: 'ofs',
         stories: 34,
         planned: 2,
         inprogress: 7,
@@ -72,9 +72,9 @@
           "area": true
         }]
       },
-      sprint3: {
-        name: "Sprint 3",
-        shortName: 'sprint3',
+      pp: {
+        name: "P&P",
+        shortName: 'pp',
         stories: 34,
         planned: 2,
         inprogress: 7,
@@ -112,21 +112,21 @@
 
   var arrayHolder = {"Backlog": [], "Development": [], "Test": [], "Done": []}; // Made global for Debug
 
-function getCumulative(){
+function getCombined(){
   // Outline the sprints that will be used to sum this data.
   // ALso create placeholder arrays for all of the different data types across the sprints
 
-  var sprintData = [flowData.sprint1.data, flowData.sprint2.data, flowData.sprint3.data];
+  var teamData = [flowData.brv.data, flowData.ofs.data, flowData.pp.data];
   
   // For each of the above sprint datasets (this will loop three times)
-  for (var i=0; i< sprintData.length; i++){
+  for (var i=0; i< teamData.length; i++){
     
     // For each object inside each data set (this will loop four times)
-    $.each(sprintData[i], function(index, val){
+    $.each(teamData[i], function(index, val){
       var vals = val.values;
       var keyVal = val.key;
       console.log("keyVal: ", keyVal);
-      var keyArray = arrayHolder[keyVal]; //The placeholder we'll be using is the one for that specific cumulative chart
+      var keyArray = arrayHolder[keyVal]; //The placeholder we'll be using is the one for that specific combined chart
       console.log("Key Array: ", keyArray);
       //If there's nothing in the backlog, then concatenate this to the backlog array.
       if (keyArray.length === 0){
@@ -139,7 +139,7 @@ function getCumulative(){
           var increment = keyArray.length;
           //Get the last number of backlog items from each sprint and add it to all the point values.
           var lastMax = keyArray[keyArray.length-1][1];
-          //Then, for each of these values, add the number of existing days to the number of days in the sprint to get cumulative days.
+          //Then, for each of these values, add the number of existing days to the number of days in the sprint to get combined days.
 
           $.each(vals, function(j, val){
             vals[j][0] = vals[j][0] + increment;
@@ -154,15 +154,15 @@ function getCumulative(){
         }
 
       });  // End loop inside sprint
-    console.log("Array Holder after sprint:", arrayHolder);    
+    console.log("Array Holder after team:", arrayHolder);    
     } // End loop of all sprints.
     console.log("Array Holder just after loop:", arrayHolder);
-    flowData.cumulative.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
-    flowData.cumulative.data.push({"key": "Development", "values": arrayHolder["Development"], area:true});
-    flowData.cumulative.data.push({"key": "Test", "values": arrayHolder["Test"], area:true});
-    flowData.cumulative.data.push({"key": "Done", "values": arrayHolder["Done"], area:true});
+    flowData.combined.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
+    flowData.combined.data.push({"key": "Development", "values": arrayHolder["Development"], area:true});
+    flowData.combined.data.push({"key": "Test", "values": arrayHolder["Test"], area:true});
+    flowData.combined.data.push({"key": "Done", "values": arrayHolder["Done"], area:true});
     console.log(flowData);
   }
 
-getCumulative();
+getCombined();
 

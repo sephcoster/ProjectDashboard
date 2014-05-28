@@ -63,7 +63,7 @@
 			    return "Unknown";
 			  }
 			  console.log("Date getMonth: ", date.getMonth());
-			  return date.getMonth() + "." + date.getDay() + "." + date.getFullYear();
+			  return (date.getMonth()+1) + "." + date.getDate() + "." + date.getFullYear();
 			});
 
 			Handlebars.registerHelper('getStatusButtonClass', function(currentStatus){
@@ -189,54 +189,3 @@
 		//Create the graph instances
 		buildBurndown('#burnChart1')
 
-//This is a nested mess that calculates cumulative project data information.
-function getCumulative(){
-  // Outline the sprints that will be used to sum this data.
-  // ALso create placeholder arrays for all of the different data types across the sprints
-
-  var sprintData = [flowData.sprint1.data, flowData.sprint2.data, flowData.sprint3.data];
-  
-  // For each of the above sprint datasets (this will loop three times)
-  for (var i=0; i< sprintData.length; i++){
-    
-    // For each object inside each data set (this will loop four times)
-    $.each(sprintData[i], function(index, val){
-      var vals = val.values;
-      var keyVal = val.key;
-      console.log("keyVal: ", keyVal);
-      var keyArray = arrayHolder[keyVal]; //The placeholder we'll be using is the one for that specific cumulative chart
-      console.log("Key Array: ", keyArray);
-      //If there's nothing in the backlog, then concatenate this to the backlog array.
-      if (keyArray.length === 0){
-          //Concatenate the values in our collector to the values in this array.
-          keyArray.push.apply(keyArray, vals);
-        //Otherwise...
-
-        } else {
-          //Get the current length of the backlog (or test, etc) array (number of days recorded)
-          var increment = keyArray.length;
-          //Get the last number of backlog items from each sprint and add it to all the point values.
-          var lastMax = keyArray[keyArray.length-1][1];
-          //Then, for each of these values, add the number of existing days to the number of days in the sprint to get cumulative days.
-
-          $.each(vals, function(j, val){
-            vals[j][0] = vals[j][0] + increment;
-            vals[j][1] = vals[j][1] + lastMax;
-          });
-          console.log("Vals after Increment: ", vals);
-
-
-
-          //Once you've added all the days, concatenate the existing array val to that specific data type (backlog, etc)
-          keyArray.push.apply(keyArray, vals);
-        }
-
-      });  // End loop inside sprint
-    console.log("Array Holder after sprint:", arrayHolder);    
-    } // End loop of all sprints.
-    console.log("Array Holder just after loop:", arrayHolder);
-    return [{"key": "Development", "values": arrayHolder["Development"], area:true}, {"key": "Test", "values": arrayHolder["Test"], area:true}, 
-            {"key": "Done", "values": arrayHolder["Done"], area:true} ]
-    //flowData.cumulative.data.push({"key": "Backlog", "values": arrayHolder["Backlog"], area:true});
-    console.log(flowData);
-  }

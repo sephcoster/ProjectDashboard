@@ -54,6 +54,20 @@
 				border: 1px solid gray;
 				width: 500px;
 			}
+			.nvd3 .nv-axis path {
+			  fill: none;
+			  stroke: #fff;
+			  stroke-opacity: .75;
+			  shape-rendering: crispEdges;
+			}
+			.nvd3 .nv-axis line {
+			  fill: none;
+			  stroke: #e5e5e5;
+			  shape-rendering: crispEdges;
+			}
+			.nvd3 .nv-axis {
+				fill: #fff;
+			}
 		</style>
 	</head>
 
@@ -177,12 +191,12 @@
 							<tr>
 								<td><div id="{{shortName}}" style="vertical-align:middle"><svg style="height:600px;width:800px"></svg></div></td>
 								<td style="vertical-align:middle">
-									<ul>
-										<li>Stories: {{ stories }}</li>
-										<li>Planned: {{ planned }}</li>
-										<li>In Progress: {{ inprogress }}</li>
-										<li>Complete: {{ complete }}</li>
-									</ul>
+									<table>
+										<tr><td>Stories</td><td style="text-align:right">{{ stories }}</td></tr>
+										<tr><td>Planned</td><td style="text-align:right">{{ planned }}</td></tr>
+										<tr><td>In Progress</td><td style="text-align:right">{{ inprogress }}</td></tr>
+										<tr><td>Complete</td><td style="text-align:right">{{ complete }}</td></tr>
+									</table>
 								</td>
 							</tr>
 						</table>
