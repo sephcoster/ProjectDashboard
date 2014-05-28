@@ -1,24 +1,24 @@
 
 			$(document).ready(function(){
 
-				var overview = $("#releaseOverviewTemplate").html(); 
-				var overviewTemplate = Handlebars.compile(overview); 							
+				var overview = $("#releaseOverviewTemplate").html();
+				var overviewTemplate = Handlebars.compile(overview);
 				$('#releaseOverview').append( overviewTemplate(project) );
 
-				var sprintStatus = $("#sprintStatusTemplate").html(); 
-				var sprintStatusTemplate = Handlebars.compile(sprintStatus); 	
+				var sprintStatus = $("#sprintStatusTemplate").html();
+				var sprintStatusTemplate = Handlebars.compile(sprintStatus);
 				$('#sprintStatus').append( sprintStatusTemplate(project.sprints) );
 
-				var testData = $("#testDataTemplate").html(); 
-				var testDataTemplate = Handlebars.compile(testData); 	
+				var testData = $("#testDataTemplate").html();
+				var testDataTemplate = Handlebars.compile(testData);
 				$('#testData').append( testDataTemplate(testingData) );
 
-				var cumulativeFlow = $("#cumulativeFlowTemplate").html(); 
-				var cumulativeFlowTemplate = Handlebars.compile(cumulativeFlow); 	
+				var cumulativeFlow = $("#cumulativeFlowTemplate").html();
+				var cumulativeFlowTemplate = Handlebars.compile(cumulativeFlow);
 				$('#cumulativeFlow').append( cumulativeFlowTemplate(flowData) );
 
-				var buildData = $("#buildDataTemplate").html(); 
-				var buildDataTemplate = Handlebars.compile(buildData); 	
+				var buildData = $("#buildDataTemplate").html();
+				var buildDataTemplate = Handlebars.compile(buildData);
 				$('#buildData').append( buildDataTemplate(project) );
 
 				initialize();
@@ -40,7 +40,7 @@
 					setTimeout(refresh, 3000);
 			}
 
-			 setTimeout(refresh, 3000);
+			setTimeout(refresh, 3000);
 
 			// Handlebar Helpers
 			Handlebars.registerHelper('statusCheck', function(field, status, options) {
